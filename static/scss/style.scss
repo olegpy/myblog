@@ -1,0 +1,184 @@
+$font_theme: 14px Arial;
+$font_h: 'Lobster';
+$margin_theme: 20px;
+// theme style
+body {
+	font: $font_theme;
+}
+
+h1 {
+	a {
+		color:#FCA205;
+		font-family: $font_h;
+		&:hover {
+			text-decoration: inherit;
+			color: #926008;
+		}
+	}
+}
+
+.navbar-brand {
+	padding: 0;
+	img {
+		height: 50px;
+	}
+}
+
+h1, h2, h3, h4 {
+    font-family: $font_h, cursive;
+}
+
+.page-header {
+        background-color: #ff9400;
+        margin-top: 0;
+        padding: $margin_theme $margin_theme*2;
+        position: relative;
+        h1, h1 a, h1 a:visited,h1 a:active {
+	        color: #ffffff;
+	        font-size: 36pt;
+	        text-decoration: none;
+		}
+    }
+
+.info {
+    // float: right;
+    color: #828282;
+}
+
+.save {
+    float: right;
+}
+
+.post-form textarea, .post-form input {
+        width: 100%;
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: $margin_theme;
+    position: absolute;
+    right: 0;
+    top: 43px;
+}
+
+.post {
+    margin-bottom: 20px;
+    h1 a, h1,a:visited {
+    	// color: #000000;
+    }
+}
+
+.header_post {
+    h1 {
+        display: inline-block;
+    }
+    .info_block {
+        display: inline-block;
+        float: right;
+        margin-top: $margin_theme;
+        // .date {
+        //     display: inline-block;
+        //     float: none;
+        // }
+    }
+}
+
+
+
+// p {
+// 	margin-bottom: 0;
+// }
+
+// p + p {
+// 	margin-top: $margin_theme;
+// }
+
+// h1 {
+// 	text-align: center;
+// }
+
+// img {
+// 	margin-bottom: $margin_theme;
+// }
+
+// .btn {
+
+// 	margin-bottom: 20px;
+// }
+// .navbar-brand {
+// 	padding: 0;
+// }
+
+// .navbar-brand img {
+// 	height: 50px;
+// }
+// .thumbnail h3 {
+// 	text-align: center;
+// }
+// .thumbnail>img {
+// 	height: 200px;
+// }
+
+// .purple{
+// 	color: purple;
+// }
+
+// .red {
+// 	color: red;
+// }
+// .blue {
+// 	color: blue;
+// }
+
+// .green {
+// 	color: green;
+// }
+
+// .orange {
+// 	color: orange;
+// }
+
+// .dark-orange {
+// 	color: #CC3300;
+// }
+
+// table tr {
+// 	background: #fefcea; /* Для старых браузров */
+//     background: linear-gradient(to left, #D8C2C2,#ACF7DF);
+// }
+// table thead tr{
+// 	background: #fefcea; /* Для старых браузров */
+//     background: linear-gradient(to bottom left, #fefcea, #5EE9F7);
+// }
+
+// .list_student tbody td:first-child {
+// 	font-weight: bold;
+// 	text-align: center;
+// }
+// .list_student tbody td:first-child a {
+// 	color: black;
+	
+// }
+
+// .list_student tbody tr{
+// 	background: #fefcea; /* Для старых браузров */
+//     background: linear-gradient(to left, #E4DFB9,#11DEB8);
+// }
+
+// .list_student tbody tr:hover {
+// 	background: linear-gradient(to right, #E4DFB9,#11DEB8);
+// }
+
+
+
+
+// .perfomance thead tr {
+// 	background: #fefcea; /* Для старых браузров */
+//     background: linear-gradient(to left, #1A6B10,#84D600);
+// }
+// .perfomance tbody tr {
+// 	background: #fefcea; /* Для старых браузров */
+//     background: linear-gradient(to left, #D8C2C2,#73B749);
+// }

@@ -1,0 +1,20 @@
+{% extends "blogs/base.html" %}
+
+{% block content_blog %}
+    <div class="post">
+        
+        <div class="header_post">
+        	<h1>{{ post.title }}</h1>
+	        <div class='info'>
+                {% if post.published_date %}
+                    {{ post.published_date }}
+                {% endif %}
+                {{ post.author }}
+                <a href="{% url 'edit_post' post.id %}">Edit Post</a>
+            </div>
+        	
+			
+        </div>
+        <p>{{ post.text|linebreaks }}</p>
+    </div>
+{% endblock %}

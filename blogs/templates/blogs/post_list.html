@@ -1,0 +1,22 @@
+{% extends "blogs/base.html" %}
+
+{% block content_blog %}
+    <div class="col-md-8">
+        {% for post in posts %}
+            <div class="post">
+                <h1><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h1>
+                <div class='info'>
+                    {% if post.published_date %}
+                        {{ post.published_date }}
+                    {% endif %}
+                    {{ post.author }}
+                </div>
+                
+                <p>{{ post.text }}</p>
+            </div>
+            <hr/>
+        {% empty %}
+            <p>No posts</p>
+        {% endfor %}
+    </div>
+{% endblock %}

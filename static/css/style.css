@@ -1,0 +1,57 @@
+body {
+  font: 14px Arial; }
+
+h1 a {
+  color: #FCA205;
+  font-family: "Lobster"; }
+  h1 a:hover {
+    text-decoration: inherit;
+    color: #926008; }
+
+.navbar-brand {
+  padding: 0; }
+  .navbar-brand img {
+    height: 50px; }
+
+h1, h2, h3, h4 {
+  font-family: "Lobster", cursive; }
+
+.page-header {
+  background-color: #ff9400;
+  margin-top: 0;
+  padding: 20px 40px;
+  position: relative; }
+  .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none; }
+
+.info {
+  color: #828282; }
+
+.save {
+  float: right; }
+
+.post-form textarea, .post-form input {
+  width: 100%; }
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+  color: #ffffff;
+  float: right;
+  font-size: 26pt;
+  margin-right: 20px;
+  position: absolute;
+  right: 0;
+  top: 43px; }
+
+.post {
+  margin-bottom: 20px; }
+
+.header_post h1 {
+  display: inline-block; }
+.header_post .info_block {
+  display: inline-block;
+  float: right;
+  margin-top: 20px; }
+
+/*# sourceMappingURL=style.css.map */

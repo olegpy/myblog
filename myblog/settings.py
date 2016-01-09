@@ -25,7 +25,7 @@ SECRET_KEY = '*og=nbpi%b7&wngx4&c+u73=$)7b+22mzszes)c=g41^^vqqo4'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog'
+    'blogs',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,10 +53,26 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'myblog.urls'
 
+# TEMPLATES = [
+#     {
+#         'BACKEND': 'django.template.backends.django.DjangoTemplates',
+#         'DIRS': [],
+#         'APP_DIRS': True,
+#         'OPTIONS': {
+#             'context_processors': [
+#                 'django.template.context_processors.debug',
+#                 'django.template.context_processors.request',
+#                 'django.contrib.auth.context_processors.auth',
+#                 'django.contrib.messages.context_processors.messages',
+#             ],
+#         },
+#     },
+# ]
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')], # <- add this line
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -68,7 +84,6 @@ TEMPLATES = [
         },
     },
 ]
-
 WSGI_APPLICATION = 'myblog.wsgi.application'
 
 
@@ -104,4 +119,4 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'), )
+# TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'), )
