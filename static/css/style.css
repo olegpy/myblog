@@ -20,6 +20,7 @@ h1, h2, h3, h4 {
   background-color: #ff9400;
   margin-top: 0;
   padding: 20px 40px;
+  margin: 0 -15px 20px;
   position: relative; }
   .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
     color: #ffffff;
@@ -53,5 +54,11 @@ h1, h2, h3, h4 {
   display: inline-block;
   float: right;
   margin-top: 20px; }
+
+.errorlist {
+  padding-left: 0;
+  list-style-type: none;
+  color: red;
+  font-weight: bold; }
 
 /*# sourceMappingURL=style.css.map */

@@ -32,6 +32,7 @@ h1, h2, h3, h4 {
         background-color: #ff9400;
         margin-top: 0;
         padding: $margin_theme $margin_theme*2;
+        margin: 0 -15px $margin_theme;
         position: relative;
         h1, h1 a, h1 a:visited,h1 a:active {
 	        color: #ffffff;
@@ -65,9 +66,6 @@ h1, h2, h3, h4 {
 
 .post {
     margin-bottom: 20px;
-    h1 a, h1,a:visited {
-    	// color: #000000;
-    }
 }
 
 .header_post {
@@ -78,11 +76,14 @@ h1, h2, h3, h4 {
         display: inline-block;
         float: right;
         margin-top: $margin_theme;
-        // .date {
-        //     display: inline-block;
-        //     float: none;
-        // }
     }
+}
+
+.errorlist {
+    padding-left:0;
+    list-style-type:none;
+    color: red;
+    font-weight: bold;
 }
 
 

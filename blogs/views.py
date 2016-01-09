@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
 from django.shortcuts import redirect
+from django.contrib import messages
 
 from .models import Post
 from .forms import PostModelForm
@@ -25,6 +26,8 @@ def add_post(request):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
+            messages.success(request, 'Post %s has been add successfully.' % (
+                post.title))
             return redirect('post_detail', post.id)
     else:
         form = PostModelForm()
@@ -39,7 +42,10 @@ def edit_post(request, pk):
             post.author = request.user
             post.published_date = timezone.now()
             post.save()
+            messages.success(request, 'Post %s has been successfully edit.' % (
+                post.title))
             return redirect('post_detail', post.id)
+
     else:
         form = PostModelForm(instance=post)
     return render(request, 'blogs/post_edit.html', {'form': form})
