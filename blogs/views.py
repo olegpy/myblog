@@ -2,16 +2,37 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.shortcuts import redirect
 from django.contrib import messages
+from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Post
 from .forms import PostModelForm
 
+class PostListView(ListView):
+    model = Post
+    paginate_by = 2
+    template_name = 'blogs/post_list.html'
+    context_object_name = 'posts'
 
-def post_list(request):
-    posts = Post.objects.filter(
-        published_date__lte=timezone.now()).order_by('published_date')
-    return render(request, 'blogs/post_list.html', {'posts': posts})
+    # def queryset(self):
+    #     qs = super(StudentListView, self).get_queryset()
+    #     # if course_id:
+    #     qs = qs.filter(published_date__lte=timezone.now())
+        # return qs
+# def post_list(request):
+#     posts = Post.objects.filter(
+#         published_date__lte=timezone.now()).order_by('published_date')
+#     return render(request, 'blogs/post_list.html', {'posts': posts})
 
+# def list_view(request):
+#     reguest_course = request.GET
+#     if 'course_id' in reguest_course:
+#         list_students = Student.objects.filter(
+#             courses=reguest_course['course_id'])
+#     else:
+#         list_students = Student.objects.all()
+# return render(request, 'students/list.html', {'list_students':
+# list_students})
 
 def post_detail(request, pk):
     post = Post.objects.get(id=pk)
