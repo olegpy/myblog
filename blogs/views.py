@@ -14,11 +14,21 @@ class PostListView(ListView):
     template_name = 'blogs/post_list.html'
     context_object_name = 'posts'
 
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        context['page_title'] = "Post list"
+        return context
+
 
 class PostDetailView(DetailView):
     model = Post
     template_name = 'blogs/post_detail.html'
     context_object_name = 'post'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostDetailView, self).get_context_data(**kwargs)
+        context['page_title'] = "Post detail"
+        return context
 
 
 class PostCreateView(CreateView):
@@ -26,6 +36,11 @@ class PostCreateView(CreateView):
     fields = ['title', 'text']
     template_name = 'blogs/post_edit.html'
     context_object_name = 'form'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostCreateView, self).get_context_data(**kwargs)
+        context['page_title'] = "Post create"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -45,6 +60,11 @@ class PostUpdateView(UpdateView):
     fields = ['title', 'text']
     template_name = 'blogs/post_edit.html'
     context_object_name = 'form'
+
+    def get_context_data(self, **kwargs):
+        context = super(PostUpdateView, self).get_context_data(**kwargs)
+        context['page_title'] = "Post update"
+        return context
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -68,7 +88,7 @@ class PostDeleteView(DeleteView):
 
     def get_context_data(self, **kwargs):
         context = super(PostDeleteView, self).get_context_data(**kwargs)
-        context['title'] = "Post deletion"
+        context['page_title'] = "Post deletion"
         return context
 
     def delete(self, request, *args, **kwargs):
