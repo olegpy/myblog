@@ -77,6 +77,7 @@ class PostDeleteView(DeleteView):
         messages.success(self.request, 'Post %s has been deleted.' % (
             self.object.title))
         return message
+        
 
 # def post_list(request):
 #     posts = Post.objects.filter(
