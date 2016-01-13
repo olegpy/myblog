@@ -37,6 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'django.contrib.sites',
+    # 'django_comments',
     'blogs',
 )
 
@@ -102,5 +104,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
+
+ADMINS = (('alex', 'ud3p@mail.ru'), ('alex', 'ex@gmail.ru'))
 
 # TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'), )

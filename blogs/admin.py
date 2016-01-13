@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from blogs.models import Post
+from .models import Post, Comment
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -16,3 +16,5 @@ class PostAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Post, PostAdmin)
+
+admin.site.register(Comment)

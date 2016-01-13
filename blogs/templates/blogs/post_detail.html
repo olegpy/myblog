@@ -23,5 +23,16 @@
 			
         </div>
         <p>{{ post.text|linebreaks }}</p>
+        <a href="" class="btn btn-default">Add comment</a>
     </div>
+
+    {% for comment in post.comments.all %}
+        <div class="comment">
+            <div class="date">{{ comment.created_date }}</div>
+            <strong>{{ comment.author }}</strong>
+            <p>{{ comment.text }}</p>
+        </div>
+    {% empty %}
+        <p>No comments in this post</p>
+    {% endfor %}
 {% endblock %}

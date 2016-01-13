@@ -1,11 +1,21 @@
 from django.utils import timezone
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.utils.decorators import method_decorator
 
-from .models import Post
+from .models import Post, Comment
+
+
+class LoginRequiredMixin(object):
+
+    @classmethod
+    def as_view(cls, **initkwargs):
+        view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
+        return login_required(view)
 
 
 class PostListView(ListView):
@@ -20,7 +30,7 @@ class PostListView(ListView):
         return context
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'blogs/post_detail.html'
     context_object_name = 'post'
@@ -31,7 +41,7 @@ class PostDetailView(DetailView):
         return context
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'text']
     template_name = 'blogs/post_edit.html'
@@ -55,7 +65,31 @@ class PostCreateView(CreateView):
         return reverse_lazy('post_detail', args=(self.object.pk,))
 
 
-class PostUpdateView(UpdateView):
+class CommentCreateView(CreateView):
+    model = Comment
+    fields = ['author', 'text']
+    template_name = 'blogs/post_comment.html'
+    context_object_name = 'form'
+
+    def get_context_data(self, **kwargs):
+        context = super(CommentCreateView, self).get_context_data(**kwargs)
+        context['page_title'] = 'Add comments'
+        return context
+
+    def form_valid(self, form):
+        self.object = objects
+        objects = form.save(commit=False)
+        objects.post = post
+        objects.save()
+        messages.success(
+            self.request, 'Comment %s has been successfully.' % (objects.author))
+        return super(CommentCreateView, self).form_valid(form)
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('post_detail', args=(self.object.pk, ))
+
+
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     fields = ['title', 'text']
     template_name = 'blogs/post_edit.html'
@@ -84,7 +118,6 @@ class PostDeleteView(DeleteView):
     fields = ['title', 'text']
     template_name = 'blogs/post_remove.html'
     context_object_name = 'post'
-    success_url = reverse_lazy('post_list')
 
     def get_context_data(self, **kwargs):
         context = super(PostDeleteView, self).get_context_data(**kwargs)
@@ -103,7 +136,6 @@ class PostDeleteView(DeleteView):
 #     posts = Post.objects.filter(
 #         published_date__lte=timezone.now()).order_by('published_date')
 #     return render(request, 'blogs/post_list.html', {'posts': posts})
-
 
 
 # def post_detail(request, pk):
