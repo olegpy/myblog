@@ -25,23 +25,29 @@ h1, h2, h3, h4 {
   .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
     color: #ffffff;
     font-size: 36pt;
-    text-decoration: none; }
+    text-decoration: none;
+    display: inline-block; }
 
 .info {
   color: #828282;
   margin-bottom: 20px; }
+  .info.page_blog {
+    float: right;
+    font-size: 36pt;
+    color: white;
+    display: inline;
+    margin-top: 20px; }
+    .info.page_blog a {
+      color: white; }
 
 .post-form textarea, .post-form input {
   width: 100%; }
 
-.top-menu, .top-menu:hover, .top-menu:visited {
-  color: #ffffff;
-  float: right;
-  font-size: 26pt;
-  margin-right: 20px;
-  position: absolute;
-  right: 0;
-  top: 43px; }
+.top-menu {
+  padding: 18px 0;
+  margin-bottom: 0; }
+  .top-menu a {
+    margin-left: 15px; }
 
 .post {
   margin-bottom: 20px; }

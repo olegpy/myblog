@@ -107,4 +107,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'), )
 
 ADMINS = (('alex', 'ud3p@mail.ru'), ('alex', 'ex@gmail.ru'))
 
+LOGIN_REDIRECT_URL = '/'
+
 # TEMPLATE_DIRS = (os.path.join(BASE_DIR, 'templates'), )

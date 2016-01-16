@@ -40,6 +40,14 @@
                     <li class="{% block nav_class_index %}{% endblock nav_class_index %}"><a href="{% url  'index' %}">Main</a></li>
                     <li class="{% block nav_class_post %}{% endblock nav_class_post %}"><a href="{% url 'post_list' %}">Blog</a></li>
                 </ul>
+                <div class="pull-right">
+                    {% if user.is_authenticated %}
+                        <p class="top-menu">Hello {{ user.username }}<a href="{% url 'auth_logout_next' %}">Log out</a></p>
+                    {% else %}
+                        <p class="top-menu"><a href="{% url 'auth_login' %}" class="top-menu">Login</a></p>
+                    {% endif %}
+                </div>
+                
             </div>
             <!-- /.navbar-collapse -->
         </div>

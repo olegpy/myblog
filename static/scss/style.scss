@@ -38,26 +38,36 @@ h1, h2, h3, h4 {
 	        color: #ffffff;
 	        font-size: 36pt;
 	        text-decoration: none;
+            display:inline-block;
 		}
     }
 
 .info {
     color: #828282;
     margin-bottom: $margin_theme;
+    &.page_blog {
+        float: right;
+        font-size: 36pt;
+        color: white;
+        display: inline;
+        margin-top: 20px;
+        a {
+            color:white;
+        }
+    }
 }
 
 .post-form textarea, .post-form input {
         width: 100%;
 }
 
-.top-menu, .top-menu:hover, .top-menu:visited {
-    color: #ffffff;
-    float: right;
-    font-size: 26pt;
-    margin-right: $margin_theme;
-    position: absolute;
-    right: 0;
-    top: 43px;
+.top-menu {
+    padding:18px 0;
+    margin-bottom: 0;
+    a {
+        margin-left:15px;
+    }
+
 }
 
 .post {
@@ -81,6 +91,7 @@ h1, h2, h3, h4 {
     color: red;
     font-weight: bold;
 }
+
 
 
 
