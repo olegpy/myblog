@@ -6,12 +6,13 @@ from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Post, Comment
+from .forms import PostModelForm, CommentModelForm
 
 
 class LoginRequiredMixin(object):
-
     @classmethod
     def as_view(cls, **initkwargs):
         view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
@@ -30,7 +31,7 @@ class PostListView(ListView):
         return context
 
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+class PostDetailView(DetailView):
     model = Post
     template_name = 'blogs/post_detail.html'
     context_object_name = 'post'
@@ -43,7 +44,8 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'text']
+    form_class = PostModelForm
+    # fields = ['title', 'text']
     template_name = 'blogs/post_edit.html'
     context_object_name = 'form'
 
@@ -67,7 +69,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class CommentCreateView(CreateView):
     model = Comment
-    fields = ['author', 'text']
+    form_class = CommentModelForm
     template_name = 'blogs/post_comment.html'
     context_object_name = 'form'
 
@@ -77,21 +79,53 @@ class CommentCreateView(CreateView):
         return context
 
     def form_valid(self, form):
-        self.object = objects
-        objects = form.save(commit=False)
-        objects.post = post
-        objects.save()
+        # link = get_object_or_404(Comment, pk=self.post.pk)
+        # print link
+
+        comment = form.save(commit=False)
+
+        name = form.cleaned_data
+
+        print self.request.post.id
+        # print self.request.post
+        # comment.post = self.post
+        comment.save()
+
+        # comment = form.save(commit=False)
+        # comment.author = self.request.post
+        # # self.object.published_date = timezone.now()
+        # comment.save()
+
+        data = form.cleaned_data
         messages.success(
-            self.request, 'Comment %s has been successfully.' % (objects.author))
+            self.request, 'Comment %s has been successfully.' % (data[
+                                                                 'author']))
         return super(CommentCreateView, self).form_valid(form)
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('post_detail', args=(self.object.pk, ))
 
 
+def add_comment_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentModelForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            print comment
+            print post
+            comment.post = post
+            comment.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = CommentModelForm()
+    return render(request, 'blogs/post_comment.html', {'form': form})
+
+
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
-    fields = ['title', 'text']
+    form_class = PostModelForm
+    # fields = ['title', 'text']
     template_name = 'blogs/post_edit.html'
     context_object_name = 'form'
 
@@ -102,6 +136,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
+        print self.request
         self.object.author = self.request.user
         self.object.published_date = timezone.now()
         self.object.save()
@@ -115,7 +150,8 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
 
 class PostDeleteView(DeleteView):
     model = Post
-    fields = ['title', 'text']
+    form_class = PostModelForm
+    # fields = ['title', 'text']
     template_name = 'blogs/post_remove.html'
     context_object_name = 'post'
 
