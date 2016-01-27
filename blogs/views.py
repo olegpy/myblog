@@ -5,7 +5,6 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.utils.decorators import method_decorator
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .models import Post, Comment
@@ -13,6 +12,7 @@ from .forms import PostModelForm, CommentModelForm
 
 
 class LoginRequiredMixin(object):
+
     @classmethod
     def as_view(cls, **initkwargs):
         view = super(LoginRequiredMixin, cls).as_view(**initkwargs)
@@ -64,7 +64,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super(PostCreateView, self).form_valid(form)
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('post_detail', args=(self.object.pk,))
+        return reverse_lazy('post_list', args=(self.object.pk,))
 
 
 class CommentCreateView(CreateView):
@@ -125,7 +125,6 @@ def add_comment_post(request, pk):
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     form_class = PostModelForm
-    # fields = ['title', 'text']
     template_name = 'blogs/post_edit.html'
     context_object_name = 'form'
 
