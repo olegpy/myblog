@@ -15,7 +15,7 @@
                     {% if post.published_date %}
                         {{ post.published_date|date:'j F, Y - H:i' }}
                     {% endif %} 
-                    <a href="{% url 'post_detail' post.id %}">Comments: {{ post.comments.count }}</a>
+                    <a href="{% url 'post_detail' post.id %}">Comments: {{ post.commnent_id }}</a>
                     Author: {{ post.author }}
                 </div>
                 
