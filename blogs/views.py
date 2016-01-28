@@ -67,87 +67,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return reverse_lazy('post_list', args=(self.object.pk,))
 
 
-# class CommentCreateView(CreateView):
-#     model = Comment
-#     form_class = CommentModelForm
-#     template_name = 'blogs/post_comment.html'
-#     context_object_name = 'form'
-
-#     def get_context_data(self, **kwargs):
-#         context = super(CommentCreateView, self).get_context_data(**kwargs)
-#         context['page_title'] = "Comment create"
-#         return context
-
-#     def form_valid(self, form):
-#         data = form.cleaned_data
-#         # messages.success(
-#         # self.request, 'Lesson %s has been successfully added.' %
-#         # (data['post']))
-#         return super(CommentCreateView, self).form_valid(form)
-
-#     def get_success_url(self):
-#         return reverse_lazy('post_detail', args=(self.object.pk, ))
-
-
-class CommentCreateView(CreateView):
-    model = Comment
-    form_class = CommentModelForm
-    template_name = 'blogs/post_comment.html'
-    context_object_name = 'form'
-
-    def form_valid(self, form):
-        data = form.cleaned_data
-        messages.success(
-            self.request, 'Comments has been successfully added.')
-        return super(CommentCreateView, self).form_valid(form)
-
-    def get_success_url(self):
-        return self.object.get_url()
-
-
-class CommentUpdateView(UpdateView):
-    model = Comment
-    form_class = CommentModelForm
-    template_name = 'blogs/post_comment.html'
-    context_object_name = 'form'
-
-    def get_context_data(self, **kwargs):
-        context = super(CommentUpdateView, self).get_context_data(**kwargs)
-        context['page_title'] = "Comment update"
-        return context
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        messages.success(
-            self.request, 'Comment %s has been successfully edit.' % (self.object.post))
-        return super(CommentUpdateView, self).form_valid(form)
-
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('post_detail', args=(self.object.pk,))
-
-
-class CommentDeleteView(DeleteView):
-    model = Comment
-    form_class = CommentModelForm
-    template_name = 'blogs/remove.html'
-    context_object_name = 'post'
-
-    def get_context_data(self, **kwargs):
-        context = super(CommentDeleteView, self).get_context_data(**kwargs)
-        context['page_title'] = "Comment deletion"
-        return context
-
-    def delete(self, request, *args, **kwargs):
-        message = super(CommentDeleteView, self).delete(
-            request, *args, **kwargs)
-        messages.success(self.request, 'Comment post %s has been deleted.' % (
-            self.object.post))
-        return message
-
-    
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('edit_comment', args=(self.object.pk,))
-
 
 
 
@@ -237,8 +156,6 @@ class PostDeleteView(DeleteView):
     context_object_name = 'post'
     success_url = reverse_lazy('post_list')
 
-
-
     def get_context_data(self, **kwargs):
         context = super(PostDeleteView, self).get_context_data(**kwargs)
         context['page_title'] = "Post deletion"
@@ -251,45 +168,59 @@ class PostDeleteView(DeleteView):
         return message
 
 
-# def post_list(request):
-#     posts = Post.objects.filter(
-#         published_date__lte=timezone.now()).order_by('published_date')
-#     return render(request, 'blogs/post_list.html', {'posts': posts})
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentModelForm
+    template_name = 'blogs/post_comment.html'
+    context_object_name = 'form'
+
+    def form_valid(self, form):
+        messages.success(
+            self.request, 'Comments has been successfully added.')
+        return super(CommentCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.object.get_url()
 
 
-# def post_detail(request, pk):
-#     post = Post.objects.get(id=pk)
-#     return render(request, 'blogs/post_detail.html', {'post': post})
+class CommentUpdateView(UpdateView):
+    model = Comment
+    form_class = CommentModelForm
+    template_name = 'blogs/post_comment.html'
+    context_object_name = 'form'
+
+    def get_context_data(self, **kwargs):
+        context = super(CommentUpdateView, self).get_context_data(**kwargs)
+        context['page_title'] = "Comment update"
+        return context
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        messages.success(
+            self.request, 'Comment %s has been successfully edit.' % (self.object.post))
+        return super(CommentUpdateView, self).form_valid(form)
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('post_detail', args=(self.object.pk,))
 
 
-# def add_post(request):
-#     if request.method == 'POST':
-#         form = PostModelForm(request.POST)
-#         if form.is_valid():
-#             post = form.save(commit=False)
-#             post.author = request.user
-#             post.published_date = timezone.now()
-#             post.save()
-#             messages.success(request, 'Post %s has been add successfully.' % (
-#                 post.title))
-#             return redirect('post_detail', post.id)
-#     else:
-#         form = PostModelForm()
-#     return render(request, 'blogs/post_edit.html', {'form': form})
+class CommentDeleteView(DeleteView):
+    model = Comment
+    form_class = CommentModelForm
+    template_name = 'blogs/remove.html'
+    context_object_name = 'post'
 
-# def edit_post(request, pk):
-#     post = Post.objects.get(id=pk)
-#     if request.method == 'POST':
-#         form = PostModelForm(request.POST, instance=post)
-#         if form .is_valid():
-#             post = form.save(commit=False)
-#             post.author = request.user
-#             post.published_date = timezone.now()
-#             post.save()
-#             messages.success(request, 'Post %s has been successfully edit.' % (
-#                 post.title))
-#             return redirect('post_detail', post.id)
+    def get_context_data(self, **kwargs):
+        context = super(CommentDeleteView, self).get_context_data(**kwargs)
+        context['page_title'] = "Comment deletion"
+        return context
 
-#     else:
-#         form = PostModelForm(instance=post)
-#     return render(request, 'blogs/post_edit.html', {'form': form})
+    def delete(self, request, *args, **kwargs):
+        message = super(CommentDeleteView, self).delete(
+            request, *args, **kwargs)
+        messages.success(self.request, 'Comment post %s has been deleted.' % (
+            self.object.post))
+        return message
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy('edit_comment', args=(self.object.pk,))
