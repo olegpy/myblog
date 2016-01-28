@@ -34,7 +34,7 @@
     <ul id="comments">
         {% for comment in comments %}     
             <li id="{{comment.id}}" class="c" style="margin-left:em;">
-                <p class="infoblock">Author: {{ comment.author }} - Date: {{ comment.created_date|date:'j F, Y - H:i' }} <a href="">Edit Comment</a><a class="pull-right" href="">Remove Comment</a></p>
+                <p class="infoblock">Author: {{ comment.author }} - Date: {{ comment.created_date|date:'j F, Y - H:i' }} <a href="{% url 'edit_comment' comment.id %}">Edit Comment</a><a class="pull-right" href="{% url 'remove_comment' comment.id %}">Remove Comment</a></p>
                 <p>{{comment.text}}</p>
                 {% if user.is_authenticated %}
                     <p><a href="" class="reply">reply</a></p>

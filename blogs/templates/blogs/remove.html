@@ -1,7 +1,7 @@
 {% extends "blogs/base.html" %}
 
 {% block content_blog %}
-    <h1>Post {{ post.title }} has been deleted</h1>
+    <h1>Info has been deleted</h1>
     <form method="POST" class="post-form">
     	{% csrf_token %}
         {{ form.as_p }}
