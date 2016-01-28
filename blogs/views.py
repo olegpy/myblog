@@ -25,6 +25,11 @@ class PostListView(ListView):
     template_name = 'blogs/post_list.html'
     context_object_name = 'posts'
 
+    # def get_queryset(self):
+    #     """Return the last five published questions."""
+    #     queryset = super(PostListView, self).get_queryset(
+    #     ).order_by('created_date')
+
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
         context['page_title'] = "Post list"
@@ -48,6 +53,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     form_class = PostModelForm
     template_name = 'blogs/post_edit.html'
     context_object_name = 'form'
+    success_url = reverse_lazy('post_list')
 
     def get_context_data(self, **kwargs):
         context = super(PostCreateView, self).get_context_data(**kwargs)
@@ -63,11 +69,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
             self.request, 'Post %s has been add successfully.' % (self.object.title))
         return super(PostCreateView, self).form_valid(form)
 
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('post_list', args=(self.object.pk,))
-
-
-
+    # def get_success_url(self, **kwargs):
+    #     return reverse_lazy('post_list', args=(self.object.pk,))
 
 
 # class CommentCreateView(CreateView):
@@ -109,21 +112,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 #         return reverse_lazy('post_detail', args=(self.object.pk, ))
 
 
-# def add_comment_post(request, pk):
-#     post=get_object_or_404(Post, pk = pk)
-#     if request.method == "POST":
-#         form=CommentModelForm(request.POST)
-#         if form.is_valid():
-#             comment=form.save(commit = False)
-#             print comment
-#             print post
-#             comment.post=post
-#             comment.save()
-#             return redirect('post_detail', pk = post.pk)
-#     else:
-#         form=CommentModelForm()
-#     return render(request, 'blogs/post_comment.html', {'form': form})
-
+#
 
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
@@ -168,19 +157,42 @@ class PostDeleteView(DeleteView):
         return message
 
 
-class CommentCreateView(CreateView):
-    model = Comment
-    form_class = CommentModelForm
-    template_name = 'blogs/post_comment.html'
-    context_object_name = 'form'
+# class PostCreateView(LoginRequiredMixin, CreateView):
+#     model = Post
+#     form_class = PostModelForm
+#     template_name = 'blogs/post_edit.html'
+#     context_object_name = 'form'
 
-    def form_valid(self, form):
-        messages.success(
-            self.request, 'Comments has been successfully added.')
-        return super(CommentCreateView, self).form_valid(form)
+#     def get_context_data(self, **kwargs):
+#         context = super(PostCreateView, self).get_context_data(**kwargs)
+#         context['page_title'] = "Post create"
+#         return context
 
-    def get_success_url(self):
-        return self.object.get_url()
+#     def form_valid(self, form):
+#         self.object = form.save(commit=False)
+#         self.object.author = self.request.user
+#         self.object.published_date = timezone.now()
+#         self.object.save()
+#         messages.success(
+#             self.request, 'Post %s has been add successfully.' % (self.object.title))
+#         return super(PostCreateView, self).form_valid(form)
+
+#     def get_success_url(self, **kwargs):
+#         return reverse_lazy('post_list', args=(self.object.pk,))
+
+
+def add_comment_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == "POST":
+        form = CommentModelForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        form = CommentModelForm()
+    return render(request, 'blogs/post_comment.html', {'form': form})
 
 
 class CommentUpdateView(UpdateView):

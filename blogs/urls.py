@@ -15,7 +15,7 @@ urlpatterns = [
         views.PostDeleteView.as_view(), name='remove_post'),
 
     url(r'^add/(?P<pk>\d+)/comment/$',
-        views.CommentCreateView.as_view(), name='add_comment_post'),
+        views.add_comment_post, name='add_comment_post'),
 
     url(r'^edit/(?P<pk>\d+)/comment/$',
         views.CommentUpdateView.as_view(), name='edit_comment'),
