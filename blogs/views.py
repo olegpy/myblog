@@ -21,10 +21,10 @@ class LoginRequiredMixin(object):
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 2
+    paginate_by = 5
     template_name = 'blogs/post_list.html'
     context_object_name = 'posts'
-
+ 
     def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
         context['page_title'] = "Post list"
@@ -70,6 +70,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     form_class = PostModelForm
     template_name = 'blogs/post_edit.html'
     context_object_name = 'form'
+    success_url = reverse_lazy('post_list')
 
     def get_context_data(self, **kwargs):
         context = super(PostUpdateView, self).get_context_data(**kwargs)
@@ -84,9 +85,6 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         messages.success(
             self.request, 'Post %s has been successfully edit.' % (self.object.title))
         return super(PostUpdateView, self).form_valid(form)
-
-    def get_success_url(self, **kwargs):
-        return reverse_lazy('post_detail', args=(self.object.pk,))
 
 
 class PostDeleteView(DeleteView):
